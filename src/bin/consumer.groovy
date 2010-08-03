@@ -14,7 +14,7 @@ channel = conn.createChannel()
 exchangeName = 'myExchange'; queueName = 'myQueue'
 
 channel.exchangeDeclare exchangeName, 'direct'
-channel.queueDeclare queueName, true, false, false, null
+channel.queueDeclare queueName, false, false, false, null
 channel.queueBind queueName, exchangeName, 'myRoutingKey'
 
 def consumer = new QueueingConsumer(channel)
