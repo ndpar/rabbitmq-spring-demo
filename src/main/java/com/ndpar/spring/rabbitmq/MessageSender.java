@@ -9,6 +9,6 @@ public class MessageSender {
     private AmqpTemplate template;
 
     public void send(String text) {
-        template.convertAndSend(text);
+        template.convertAndSend("NDPAR.SPRING.JAVA", text);
     }
 }
