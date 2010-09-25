@@ -11,7 +11,7 @@ factory = new ConnectionFactory(
 conn = factory.newConnection()
 channel = conn.createChannel()
 
-channel.basicPublish 'myExchange', 'myRoutingKey', null, "Hello, world!".bytes
+channel.basicPublish 'ndpar.topic', 'NDPAR.GROOVY.GROOVY', null, "Hello, world!".bytes
 
 channel.close()
 conn.close()

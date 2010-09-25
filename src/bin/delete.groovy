@@ -11,8 +11,7 @@ factory = new ConnectionFactory(
 conn = factory.newConnection()
 channel = conn.createChannel()
 
-channel.exchangeDelete 'myExchange'
-channel.queueDelete 'myQueue'
+channel.queueDelete 'ndpar.groovy.client'
 
 channel.close()
 conn.close()

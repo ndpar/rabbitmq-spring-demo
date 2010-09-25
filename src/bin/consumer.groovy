@@ -11,11 +11,11 @@ factory = new ConnectionFactory(
 conn = factory.newConnection()
 channel = conn.createChannel()
 
-exchangeName = 'myExchange'; queueName = 'myQueue'
+exchangeName = 'ndpar.topic'; queueName = 'ndpar.groovy.client'
 
-channel.exchangeDeclare exchangeName, 'direct'
+channel.exchangeDeclare exchangeName, 'topic'
 channel.queueDeclare queueName, false, false, false, null
-channel.queueBind queueName, exchangeName, 'myRoutingKey'
+channel.queueBind queueName, exchangeName, 'NDPAR.GROOVY.#'
 
 def consumer = new QueueingConsumer(channel)
 channel.basicConsume queueName, false, consumer
