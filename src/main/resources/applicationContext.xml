@@ -8,7 +8,7 @@
 
     <context:annotation-config />
 
-    <bean id="admin" class="com.ndpar.spring.rabbitmq.Admin" lazy-init="false" />
+    <bean id="queueConfigurer" class="com.ndpar.spring.rabbitmq.QueueConfigurer" lazy-init="false" />
 
     <bean id="rabbitBrokerAdmin" class="org.springframework.amqp.rabbit.admin.RabbitBrokerAdmin">
         <constructor-arg ref="rabbitConnectionFactory" />
@@ -20,14 +20,14 @@
     </bean>
 
     <bean id="rabbitTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate"
-        depends-on="admin"
+        depends-on="queueConfigurer"
         p:connectionFactory-ref="rabbitConnectionFactory"
         p:exchange="ndpar.topic" />
 
     <bean id="messageSender" class="com.ndpar.spring.rabbitmq.MessageSender" />
 
     <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer"
-        depends-on="admin"
+        depends-on="queueConfigurer"
         p:connectionFactory-ref="rabbitConnectionFactory"
         p:queueName="ndpar.spring.client"
         p:messageListener-ref="messageListener" />

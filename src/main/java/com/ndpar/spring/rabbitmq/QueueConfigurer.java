@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Optional class. Needed only if queue does not exist in RabbitMQ server.
  */
-public class Admin {
+public class QueueConfigurer {
 
     public static final String EXCHANGE = "ndpar.topic";
     public static final String QUEUE = "ndpar.spring.client";
