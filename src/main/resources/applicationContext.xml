@@ -10,7 +10,7 @@
 
     <bean id="admin" class="com.ndpar.spring.rabbitmq.Admin" lazy-init="false" />
 
-    <bean id="rabbitAdmin" class="org.springframework.amqp.rabbit.core.RabbitAdmin">
+    <bean id="rabbitBrokerAdmin" class="org.springframework.amqp.rabbit.admin.RabbitBrokerAdmin">
         <constructor-arg ref="rabbitConnectionFactory" />
     </bean>
 
@@ -33,5 +33,13 @@
         p:messageListener-ref="messageListener" />
 
     <bean id="messageListener" class="com.ndpar.spring.rabbitmq.MessageHandler" />
-</beans>
 
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans">
+            <map>
+                <entry key="ndpar:name=Admin" value-ref="rabbitBrokerAdmin" />
+                <entry key="ndpar:name=Sender" value-ref="messageSender" />
+            </map>
+        </property>
+    </bean>
+</beans>
