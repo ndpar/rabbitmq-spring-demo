@@ -10,7 +10,7 @@
 
     <bean id="queueConfigurer" class="com.ndpar.spring.rabbitmq.QueueConfigurer" lazy-init="false" />
 
-    <bean id="rabbitBrokerAdmin" class="org.springframework.amqp.rabbit.admin.RabbitBrokerAdmin">
+    <bean id="rabbitAdmin" class="org.springframework.amqp.rabbit.core.RabbitAdmin">
         <constructor-arg ref="rabbitConnectionFactory" />
     </bean>
 
@@ -41,5 +41,9 @@
                 <entry key="ndpar:name=Sender" value-ref="messageSender" />
             </map>
         </property>
+    </bean>
+
+    <bean id="rabbitBrokerAdmin" class="org.springframework.amqp.rabbit.admin.RabbitBrokerAdmin" autowire-candidate="false">
+        <constructor-arg ref="rabbitConnectionFactory" />
     </bean>
 </beans>
