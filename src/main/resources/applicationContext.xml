@@ -8,7 +8,19 @@
 
     <context:annotation-config />
 
-    <bean id="queueConfigurer" class="com.ndpar.spring.rabbitmq.QueueConfigurer" lazy-init="false" />
+    <bean id="topic" class="org.springframework.amqp.core.TopicExchange">
+        <constructor-arg value="ndpar.topic" />
+    </bean>
+
+    <bean id="queue" class="org.springframework.amqp.core.Queue">
+        <constructor-arg value="ndpar.spring.client" />
+    </bean>
+
+    <bean id="binding" class="org.springframework.amqp.core.Binding">
+        <constructor-arg index="0" ref="queue" />
+        <constructor-arg index="1" ref="topic" />
+        <constructor-arg index="2" value="NDPAR.SPRING.#" />
+    </bean>
 
     <bean id="rabbitAdmin" class="org.springframework.amqp.rabbit.core.RabbitAdmin">
         <constructor-arg ref="rabbitConnectionFactory" />
@@ -20,19 +32,18 @@
     </bean>
 
     <bean id="rabbitTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate"
-        depends-on="queueConfigurer"
         p:connectionFactory-ref="rabbitConnectionFactory"
         p:exchange="ndpar.topic" />
 
     <bean id="messageSender" class="com.ndpar.spring.rabbitmq.MessageSender" />
 
     <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer"
-        depends-on="queueConfigurer"
         p:connectionFactory-ref="rabbitConnectionFactory"
         p:queueName="ndpar.spring.client"
         p:messageListener-ref="messageListener" />
 
     <bean id="messageListener" class="com.ndpar.spring.rabbitmq.MessageHandler" />
+
 
     <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
         <property name="beans">
