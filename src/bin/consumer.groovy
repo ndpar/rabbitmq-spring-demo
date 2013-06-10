@@ -1,21 +1,21 @@
+#!/usr/bin/env groovy
+
 import com.rabbitmq.client.*
 
-@Grab(group='com.rabbitmq', module='amqp-client', version='1.8.1')
-factory = new ConnectionFactory(
+@Grab(group='com.rabbitmq', module='amqp-client', version='3.1.0')
+factory = new ConnectionFactory([
     username: 'guest',
     password: 'guest',
     virtualHost: '/',
-    host: 'lab.ndpar.com',
-    port: 5672
-)
-conn = factory.newConnection()
+    requestedHeartbeat: 0
+])
+conn = factory.newConnection(new Address('localhost', 5672))
 channel = conn.createChannel()
 
-exchangeName = 'ndpar.topic'; queueName = 'ndpar.groovy.client'
+queueName = 'myQueue'
 
-channel.exchangeDeclare exchangeName, 'topic'
-channel.queueDeclare queueName, false, false, false, null
-channel.queueBind queueName, exchangeName, 'NDPAR.GROOVY.#'
+channel.queueDeclare queueName, false, true, true, [:]
+channel.queueBind queueName, 'amq.fanout', 'myRoutingKey'
 
 def consumer = new QueueingConsumer(channel)
 channel.basicConsume queueName, false, consumer

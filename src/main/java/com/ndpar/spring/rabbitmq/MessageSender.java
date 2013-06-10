@@ -3,7 +3,11 @@ package com.ndpar.spring.rabbitmq;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
+@Service
+@ManagedResource
 public class MessageSender {
 
     @Autowired
@@ -11,11 +15,11 @@ public class MessageSender {
 
     @ManagedOperation
     public void send(String text) {
-        send("NDPAR.SPRING.JAVA", text);
+        send("amq.fanout", "NDPAR.SPRING.JAVA", text);
     }
 
     @ManagedOperation
-    public void send(String key, String text) {
-        template.convertAndSend(key, text);
+    public void send(String exchange, String key, String text) {
+        template.convertAndSend(exchange, key, text);
     }
 }

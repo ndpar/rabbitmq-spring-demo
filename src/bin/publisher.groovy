@@ -1,17 +1,18 @@
+#!/usr/bin/env groovy
+
 import com.rabbitmq.client.*
 
-@Grab(group='com.rabbitmq', module='amqp-client', version='1.8.1')
-factory = new ConnectionFactory(
+@Grab(group='com.rabbitmq', module='amqp-client', version='3.1.0')
+factory = new ConnectionFactory([
     username: 'guest',
     password: 'guest',
     virtualHost: '/',
-    host: 'lab.ndpar.com',
-    port: 5672
-)
-conn = factory.newConnection()
+    requestedHeartbeat: 0
+])
+conn = factory.newConnection(new Address('localhost', 5672))
 channel = conn.createChannel()
 
-channel.basicPublish 'ndpar.topic', 'NDPAR.GROOVY.GROOVY', null, "Hello, world!".bytes
+channel.basicPublish 'amq.fanout', 'myRoutingKey', null, "Hello, world!".bytes
 
 channel.close()
 conn.close()
