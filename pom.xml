@@ -5,14 +5,16 @@
     <groupId>com.ndpar</groupId>
     <artifactId>rabbitmq-spring-demo</artifactId>
     <version>1.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <rabbitmq.version>3.1.1</rabbitmq.version>
-        <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
         <spring.amqp.version>1.1.4.RELEASE</spring.amqp.version>
+        <spring.framework.version>4.0.0.BUILD-SNAPSHOT</spring.framework.version>
     </properties>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -52,6 +54,29 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.0-rc5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>
