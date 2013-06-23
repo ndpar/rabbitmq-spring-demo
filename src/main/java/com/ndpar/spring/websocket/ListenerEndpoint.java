@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
+import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -30,6 +31,7 @@ public class ListenerEndpoint implements MessageListener {
     private ConnectionFactory connectionFactory;
 
     private Session session;
+    private SimpleMessageListenerContainer container;
 
     @OnOpen
     public void newSession(Session session) {
@@ -40,11 +42,6 @@ public class ListenerEndpoint implements MessageListener {
         Queue queue = new Queue(queueName, false, false, true);
         amqpAdmin.declareQueue(queue);
 
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueues(queue);
-        container.setMessageListener(this);
-
         Map<String, List<String>> params = session.getRequestParameterMap();
         if (params.containsKey(KEY)) {
             String key = params.get(KEY).get(0);
@@ -53,6 +50,17 @@ public class ListenerEndpoint implements MessageListener {
         } else {
             log.warn(String.format("No %s parameter provided", KEY));
         }
+
+        container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueues(queue);
+        container.setMessageListener(this);
+        container.start();
+    }
+
+    @OnClose
+    public void sessionClose(Session session) {
+        container.stop();
     }
 
     @Override
