@@ -27,8 +27,9 @@ public class SenderEndpoint {
 
     @OnMessage
     public void sendTextMessage(Session session, String msg, boolean last) {
-        log.info("Sending message: " + msg);
-        template.convertAndSend("amq.topic", "999999", msg);
+        log.info("Message: " + msg);
+        String[] tokens = msg.split(";");
+        template.convertAndSend("amq.topic", tokens[0], tokens[1]);
     }
 
     @OnError
