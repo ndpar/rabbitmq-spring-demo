@@ -1,8 +1,8 @@
 package com.ndpar.spring.websocket;
 
-import com.ndpar.spring.rabbitmq.MessageSender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
@@ -18,7 +18,7 @@ public class SenderEndpoint {
     protected final Log log = LogFactory.getLog(getClass());
 
     @Autowired
-    private MessageSender messageSender;
+    private AmqpTemplate template;
 
     @OnOpen
     public void newSession() {
@@ -26,9 +26,9 @@ public class SenderEndpoint {
     }
 
     @OnMessage
-    public void echoTextMessage(Session session, String msg, boolean last) {
+    public void sendTextMessage(Session session, String msg, boolean last) {
         log.info("Sending message: " + msg);
-        messageSender.send("amq.topic", "999999", msg);
+        template.convertAndSend("amq.topic", "999999", msg);
     }
 
     @OnError
