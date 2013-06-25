@@ -17,8 +17,6 @@
             }
             if ('WebSocket' in window) {
                 ws = new WebSocket(target);
-            } else if ('MozWebSocket' in window) {
-                ws = new MozWebSocket(target);
             } else {
                 alert('WebSocket is not supported by this browser.');
                 return;
@@ -44,15 +42,6 @@
             setConnected(false);
         }
 
-        function updateTarget() {
-            var target = "/rabbitmq-spring-demo/listenerEndpoint?key=999999";
-            if (window.location.protocol == 'http:') {
-                document.getElementById('target').value = 'ws://' + window.location.host + target;
-            } else {
-                document.getElementById('target').value = 'wss://' + window.location.host + target;
-            }
-        }
-
         function log(message) {
             var console = document.getElementById('console');
             var p = document.createElement('p');
@@ -64,9 +53,18 @@
             }
             console.scrollTop = console.scrollHeight;
         }
+
+        function defineEndpointUrl() {
+            var target = "/rabbitmq-spring-demo/listenerEndpoint?key=A.%23";
+            if (window.location.protocol == 'http:') {
+                document.getElementById('target').value = 'ws://' + window.location.host + target;
+            } else {
+                document.getElementById('target').value = 'wss://' + window.location.host + target;
+            }
+        }
     </script>
 </head>
-<body onload="updateTarget();">
+<body onload="defineEndpointUrl();">
 <div>
     <div id="connect-container">
         <div>
