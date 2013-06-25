@@ -12,6 +12,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import static com.ndpar.spring.websocket.Constants.*;
+
 @ServerEndpoint(value = "/senderEndpoint", configurator = SpringConfigurator.class)
 public class SenderEndpoint {
 
@@ -29,7 +31,7 @@ public class SenderEndpoint {
     public void sendTextMessage(Session session, String msg, boolean last) {
         log.info("Message: " + msg);
         String[] tokens = msg.split(";");
-        template.convertAndSend("amq.topic", tokens[0], tokens[1]);
+        template.convertAndSend(TOPIC, tokens[0], tokens[1]);
     }
 
     @OnError
