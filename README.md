@@ -10,11 +10,15 @@ Declare static exchanges, queues, and bindings in XML:
 Declare queues, bindings, and listeners programmatically:
 [ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java).
 
-## WebSockets annotations
+## WebSockets
 
-Take a look at
+Java:
 [ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java),
 [SenderEndpoint](src/main/java/com/ndpar/spring/websocket/SenderEndpoint.java).
+
+JavaScript:
+[receive.html](src/main/webapp/receive.html),
+[send.html](src/main/webapp/send.html).
 
 ## Testing
 
