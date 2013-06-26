@@ -1,4 +1,30 @@
-Samples demonstrating Spring WebSocket support, currently in development for Spring Framework 4.0.
+Samples demonstrating Spring AMQP (RabbitMQ) and Spring WebSocket (JSR-356) support.
+
+## Static RabbitMQ configuration
+
+Declare static exchanges, queues, and bindings in XML:
+[ac-rabbitmq.xml](src/main/resources/ac-rabbitmq.xml).
+
+## Dynamic RabbitMQ configuration
+
+Declare queues, bindings, and listeners programmatically:
+[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java).
+
+## WebSockets annotations
+
+Take a look at
+[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java),
+[SenderEndpoint](src/main/java/com/ndpar/spring/websocket/SenderEndpoint.java).
+
+## Testing
+
+- Build the app: `mvn clean package`
+- Deploy it to Tomcat
+- Open [listener](http://localhost:8080/rabbitmq-spring-demo/receive.html) in a browser window
+- Click *Connect* button
+- Open [sender](http://localhost:8080/rabbitmq-spring-demo/send.html) in another browser window
+- Click *Connect* button
+- Click *Send* button
 
 ## Tomcat
 
