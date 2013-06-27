@@ -2,25 +2,25 @@ Samples demonstrating Spring AMQP (RabbitMQ) and Spring WebSocket (JSR-356) supp
 
 ## Static RabbitMQ configuration
 
-Declare static exchanges, queues, and bindings in XML:
+Declare exchanges, queues, bindings, etc. statically in XML:
 [ac-rabbitmq.xml](src/main/resources/ac-rabbitmq.xml).
 
 ## Dynamic RabbitMQ configuration
 
 Declare queues, bindings, and listeners programmatically:
-[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java).
+[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java#L44-46).
 
 ## WebSockets
 
 Java:
-[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java),
+[ListenerEndpoint](src/main/java/com/ndpar/spring/websocket/ListenerEndpoint.java#L11-15),
 [SenderEndpoint](src/main/java/com/ndpar/spring/websocket/SenderEndpoint.java).
 
 JavaScript:
-[receive.html](src/main/webapp/receive.html),
-[send.html](src/main/webapp/send.html).
+[receive.html](src/main/webapp/receive.html#L18-34),
+[send.html](src/main/webapp/send.html#L19-35).
 
-## Testing
+## Running demo
 
 - Build the app: `mvn clean package`
 - Deploy it to Tomcat
@@ -33,7 +33,7 @@ JavaScript:
 ## Tomcat
 
 Tomcat provides early JSR-356 support (WebSocket API for Java).
-You'll need to build the latest Tomcat source from trunk, which is relatively simple.
+You'll need to build the latest Tomcat from sources.
 
 Check out Tomcat trunk:
 
@@ -57,4 +57,5 @@ A usable Tomcat installation can be found in `output/build`
 
 ## Resources
 
-Spring AMQP - [Reference Documentation](http://static.springsource.org/spring-amqp/reference/htmlsingle/)
+- Spring AMQP — [Reference Documentation](http://static.springsource.org/spring-amqp/reference/htmlsingle/)
+- Spring WebSockets — Rossen Stoyanchev's [blog](http://blog.springsource.org/2013/05/22/spring-framework-4-0-m1-websocket-support/)
