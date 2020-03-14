@@ -10,7 +10,7 @@ Run RabbitMQ locally with default settings
 
 ## Examples
 
-### Randez-Vous
+### Rendez-Vous
 
 Run the following commands in separate terminal windows
 
